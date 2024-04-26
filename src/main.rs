@@ -86,7 +86,7 @@ impl ExecutionContext {
     fn read_files(&self, path: impl AsRef<Path>) -> Result<Vec<String>> {
         let path = path.as_ref();
         match self {
-            Self::Default | Self::Simulate { path: _, input: None } => {
+            Self::Default | Self::DryRun | Self::Simulate { path: _, input: None } => {
                 let files = fs::read_dir(path)?
                     .flat_map(|dir| {
                         if let Err(err) = dir.as_ref() {
@@ -116,7 +116,7 @@ impl ExecutionContext {
 
                 Ok(files)
             }
-            _ => Ok(Default::default())
+            Self::Simulate { .. } => Ok(Default::default())
         }
     }
 
