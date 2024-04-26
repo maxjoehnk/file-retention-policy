@@ -8,7 +8,7 @@ keep-yearly = 1
 
 [[paths]]
 path = "/var/backups/consul"
-file-pattern = "{name}_{year}-{month}-{day}T{hour}:{minutes}{TZ}.bck"
+file-pattern = "consul_{year}-{month}-{day}T{hour}:{minutes}{TZ}.bck"
 
 [[paths]]
 path = "/var/backups/upsource"
