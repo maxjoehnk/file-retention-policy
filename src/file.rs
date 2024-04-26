@@ -38,6 +38,22 @@ impl RetentionFilePattern {
             let month = u32::from_str(month.as_str())?;
 
             Some(month)
+        } else if let Some(month_abr) = captures.name("month_abr") {
+            match month_abr.as_str().to_lowercase().as_str() {
+                "jan" => Some(1),
+                "feb" => Some(2),
+                "mar" => Some(3),
+                "apr" => Some(4),
+                "may" => Some(5),
+                "jun" => Some(6),
+                "jul" => Some(7),
+                "aug" => Some(8),
+                "sep" => Some(9),
+                "oct" => Some(10),
+                "nov" => Some(11),
+                "dec" => Some(12),
+                _ => None,
+            }
         } else {
             None
         };
@@ -83,6 +99,7 @@ impl RetentionFilePattern {
         let regex_str = self.0
             .replace("{name}", "(?P<name>.+)")
             .replace("{year}", "(?P<year>\\d{4})")
+            .replace("{month_abr}", "(?P<month_abr>[a-zA-Z]{3})")
             .replace("{month}", "(?P<month>\\d{1,2})")
             .replace("{day}", "(?P<day>\\d{1,2})")
             .replace("{hour}", "(?P<hour>\\d{1,2})")
@@ -118,6 +135,18 @@ mod tests {
     #[test_case("12", 12)]
     fn parse_month(filename: &str, month: u32) {
         let file_pattern = RetentionFilePattern("{month}".to_string());
+
+        let date_time = file_pattern.parse(filename).unwrap();
+
+        assert_eq!(month, date_time.month())
+    }
+
+    #[test_case("Jan", 1)]
+    #[test_case("Mar", 3)]
+    #[test_case("JUN", 6)]
+    #[test_case("dec", 12)]
+    fn parse_month_abr(filename: &str, month: u32) {
+        let file_pattern = RetentionFilePattern("{month_abr}".to_string());
 
         let date_time = file_pattern.parse(filename).unwrap();
 
