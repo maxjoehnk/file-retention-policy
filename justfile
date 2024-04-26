@@ -12,6 +12,9 @@ lint:
 run:
   cargo run
 
+test:
+	cargo test
+
 example-consul: (simulate-example "/var/backups/consul" "examples/consul.lines")
 
 example-postgres: (simulate-example "/var/backups/pg" "examples/postgres.lines")
