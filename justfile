@@ -1,7 +1,10 @@
 #!/usr/bin/env just --justfile
 
 release:
-  cargo build --release    
+  cargo build --release
+
+release-musl:
+  cargo build --release --target x86_64-unknown-linux-musl
 
 lint:
   cargo clippy
