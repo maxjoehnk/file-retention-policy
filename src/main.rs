@@ -130,7 +130,15 @@ impl ExecutionContext {
     fn delete_files(&self, path: impl AsRef<Path>, files: Vec<RetentionFile>) -> Result<()> {
         let path = path.as_ref();
         for file in files {
-            fs::remove_file(path.join(file.filename))?;
+            let file_path = path.join(file.filename);
+            if !file_path.exists() {
+                continue;
+            }
+            if file_path.is_dir() {
+                fs::remove_dir_all(file_path)?;
+            } else {
+                fs::remove_file(file_path)?;
+            }
         }
         Ok(())
     }
