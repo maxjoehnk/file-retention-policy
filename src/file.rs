@@ -38,7 +38,7 @@ impl RetentionFilePattern {
             let month = u32::from_str(month.as_str())?;
 
             Some(month)
-        } else if let Some(month_abr) = captures.name("month_abr") {
+        } else if let Some(month_abr) = captures.name("month_abbr") {
             match month_abr.as_str().to_lowercase().as_str() {
                 "jan" => Some(1),
                 "feb" => Some(2),
@@ -99,7 +99,8 @@ impl RetentionFilePattern {
         let regex_str = self.0
             .replace("{name}", "(?P<name>.+)")
             .replace("{year}", "(?P<year>\\d{4})")
-            .replace("{month_abr}", "(?P<month_abr>[a-zA-Z]{3})")
+            .replace("{month_abr}", "(?P<month_abbr>[a-zA-Z]{3})")
+            .replace("{month_abbr}", "(?P<month_abbr>[a-zA-Z]{3})")
             .replace("{month}", "(?P<month>\\d{1,2})")
             .replace("{day}", "(?P<day>\\d{1,2})")
             .replace("{hour}", "(?P<hour>\\d{1,2})")
@@ -145,7 +146,20 @@ mod tests {
     #[test_case("Mar", 3)]
     #[test_case("JUN", 6)]
     #[test_case("dec", 12)]
-    fn parse_month_abr(filename: &str, month: u32) {
+    fn parse_month_abbrevation(filename: &str, month: u32) {
+        let file_pattern = RetentionFilePattern("{month_abbr}".to_string());
+
+        let date_time = file_pattern.parse(filename).unwrap();
+
+        assert_eq!(month, date_time.month())
+    }
+
+    // First release had a typo in the file pattern. This test ensures that the month abbreviation is still parsed correctly.
+    #[test_case("Jan", 1)]
+    #[test_case("Mar", 3)]
+    #[test_case("JUN", 6)]
+    #[test_case("dec", 12)]
+    fn parse_month_abbrevation_with_typo(filename: &str, month: u32) {
         let file_pattern = RetentionFilePattern("{month_abr}".to_string());
 
         let date_time = file_pattern.parse(filename).unwrap();

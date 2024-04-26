@@ -79,14 +79,14 @@ The file pattern will be converted to a regex pattern to extract the date from t
 
 The following placeholders are supported:
 
-| Placeholder | Description                               |
-|-------------|-------------------------------------------|
-| {year}      | year (e.g., 2024)                         |
-| {month}     | month (1..12)                             |
-| {month_abr} | abbreviated month name (e.g., Jan)        |
-| {day}       | day (1..31)                               |
-| {hour}      | hour (0..23)                              |
-| {minutes}   | minutes (0..59)                           |
-| {seconds}   | seconds (0..59)                           |
-| {TZ}        | timezone (e.g., +02:00)                   |
-| {name}      | dynamic match with at least one character |
+| Placeholder  | Description                               |
+|--------------|-------------------------------------------|
+| {year}       | year (e.g., 2024)                         |
+| {month}      | month (1..12)                             |
+| {month_abbr} | abbreviated month name (e.g., Jan)        |
+| {day}        | day (1..31)                               |
+| {hour}       | hour (0..23)                              |
+| {minutes}    | minutes (0..59)                           |
+| {seconds}    | seconds (0..59)                           |
+| {TZ}         | timezone (e.g., +02:00)                   |
+| {name}       | dynamic match with at least one character |

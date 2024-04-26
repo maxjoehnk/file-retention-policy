@@ -12,7 +12,7 @@ file-pattern = "consul_{year}-{month}-{day}T{hour}:{minutes}{TZ}.bck"
 
 [[paths]]
 path = "/var/backups/upsource"
-file-pattern = "{year} {month_abr} {day} {hour}-{minutes}-{seconds}"
+file-pattern = "{year} {month_abbr} {day} {hour}-{minutes}-{seconds}"
 
 [[paths]]
 path = "/var/backups/hub"
